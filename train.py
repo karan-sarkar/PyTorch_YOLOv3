@@ -19,6 +19,7 @@ import torch.optim as optim
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--path', type=str, default='daytime')
+    parser.add_argument('--batch', type=int, default=4)
     parser.add_argument('--cfg', type=str, default='config/yolov3_default.cfg',
                         help='config file. see readme')
     parser.add_argument('--weights_path', type=str,
@@ -63,7 +64,7 @@ def main():
     burn_in = cfg['TRAIN']['BURN_IN']
     iter_size = cfg['TRAIN']['MAXITER']
     steps = eval(cfg['TRAIN']['STEPS'])
-    batch_size = cfg['TRAIN']['BATCHSIZE']
+    batch_size = args.batch
     subdivision = cfg['TRAIN']['SUBDIVISION']
     ignore_thre = cfg['TRAIN']['IGNORETHRE']
     random_resize = cfg['AUGMENTATION']['RANDRESIZE']
