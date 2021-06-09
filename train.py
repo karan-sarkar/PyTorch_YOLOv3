@@ -174,6 +174,7 @@ def main():
             targets = Variable(targets.type(dtype), requires_grad=False)
             loss = model(imgs, targets)
             loss.mean().backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 5)
 
         optimizer.step()
         scheduler.step()
