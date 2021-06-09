@@ -190,7 +190,7 @@ def main():
                   flush=True)
 
             if args.tfboard:
-                tblogger.add_scalar('train/total_loss', model.loss_dict['l2'], iter_i)
+                tblogger.add_scalar('train/total_loss', model.module.loss_dict['l2'], iter_i)
 
             # random resizing
             if random_resize:
