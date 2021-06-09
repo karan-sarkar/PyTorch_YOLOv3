@@ -184,9 +184,9 @@ def main():
             print('[Iter %d/%d] [lr %f] '
                   '[Losses: xy %f, wh %f, conf %f, cls %f, total %f, imgsize %d]'
                   % (iter_i, iter_size, current_lr,
-                     model.loss_dict['xy'], model.loss_dict['wh'],
-                     model.loss_dict['conf'], model.loss_dict['cls'], 
-                     model.loss_dict['l2'], imgsize),
+                     model.module.loss_dict['xy'], model.module.loss_dict['wh'],
+                     model.module.loss_dict['conf'], model.module.loss_dict['cls'], 
+                     model.module.loss_dict['l2'], imgsize),
                   flush=True)
 
             if args.tfboard:
