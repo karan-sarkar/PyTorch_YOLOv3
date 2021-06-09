@@ -14,7 +14,7 @@ class COCOAPIEvaluator():
     All the data in the val2017 dataset are processed \
     and evaluated by COCO API.
     """
-    def __init__(self, model_type, data_dir='../bdd100k/images/100k', json_file = 'daytime', img_size=416, confthre, nmsthre):
+    def __init__(self, model_type, data_dir='../bdd100k/images/100k', json_file = 'daytime', img_size=416, confthre=0.8, nmsthre=0.45):
         """
         Args:
             model_type (str): model name specified in config file
