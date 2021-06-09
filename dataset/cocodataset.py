@@ -13,8 +13,8 @@ class COCODataset(Dataset):
     """
     COCO dataset class.
     """
-    def __init__(self, model_type, data_dir='COCO', json_file='instances_train2017.json',
-                 name='train2017', img_size=416,
+    def __init__(self, model_type, data_dir='../bdd100k/images/100k', json_file='daytime',
+                 name='train', img_size=416,
                  augmentation=None, min_size=1, debug=False):
         """
         COCO dataset initialization. Annotation data are read into memory by COCO API.
@@ -30,7 +30,7 @@ class COCODataset(Dataset):
         self.data_dir = data_dir
         self.json_file = json_file
         self.model_type = model_type
-        self.coco = COCO(self.data_dir+'annotations/'+self.json_file)
+        self.coco = COCO(str(daytime) + '_bdd100k_labels_images_det_coco_' + str(name) + '.json')
         self.ids = self.coco.getImgIds()
         if debug:
             self.ids = self.ids[1:2]
@@ -74,7 +74,7 @@ class COCODataset(Dataset):
         """
         id_ = self.ids[index]
 
-        anno_ids = self.coco.getAnnIds(imgIds=[int(id_)], iscrowd=None)
+        anno_ids = self.coco.getAnnIds(imgIds=[int(id_['id'])], iscrowd=None)
         annotations = self.coco.loadAnns(anno_ids)
 
         lrflip = False
@@ -83,14 +83,8 @@ class COCODataset(Dataset):
 
         # load image and preprocess
         img_file = os.path.join(self.data_dir, self.name,
-                                '{:012}'.format(id_) + '.jpg')
+                                id_['file_name'])
         img = cv2.imread(img_file)
-
-        if self.json_file == 'instances_val5k.json' and img is None:
-            img_file = os.path.join(self.data_dir, 'train2017',
-                                    '{:012}'.format(id_) + '.jpg')
-            img = cv2.imread(img_file)
-        assert img is not None
 
         img, info_img = preprocess(img, self.img_size, jitter=self.jitter,
                                    random_placing=self.random_placing)

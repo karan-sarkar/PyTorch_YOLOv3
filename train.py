@@ -18,6 +18,7 @@ import torch.optim as optim
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--path', type=str, default='daytime')
     parser.add_argument('--cfg', type=str, default='config/yolov3_default.cfg',
                         help='config file. see readme')
     parser.add_argument('--weights_path', type=str,
@@ -100,6 +101,7 @@ def main():
     if cuda:
         print("using cuda") 
         model = model.cuda()
+        model = nn.DataParallel(model)
 
     if args.tfboard:
         print("using tfboard")
@@ -110,7 +112,7 @@ def main():
 
     imgsize = cfg['TRAIN']['IMGSIZE']
     dataset = COCODataset(model_type=cfg['MODEL']['TYPE'],
-                  data_dir='COCO/',
+                  json_file = args.path,
                   img_size=imgsize,
                   augmentation=cfg['AUGMENTATION'],
                   debug=args.debug)
@@ -120,7 +122,7 @@ def main():
     dataiterator = iter(dataloader)
 
     evaluator = COCOAPIEvaluator(model_type=cfg['MODEL']['TYPE'],
-                    data_dir='COCO/',
+                    json_file = args.path,
                     img_size=cfg['TEST']['IMGSIZE'],
                     confthre=cfg['TEST']['CONFTHRE'],
                     nmsthre=cfg['TEST']['NMSTHRE'])

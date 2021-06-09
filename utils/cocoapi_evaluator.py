@@ -14,7 +14,7 @@ class COCOAPIEvaluator():
     All the data in the val2017 dataset are processed \
     and evaluated by COCO API.
     """
-    def __init__(self, model_type, data_dir, img_size, confthre, nmsthre):
+    def __init__(self, model_type, data_dir='../bdd100k/images/100k', json_file = 'daytime', img_size, confthre, nmsthre):
         """
         Args:
             model_type (str): model name specified in config file
@@ -35,8 +35,8 @@ class COCOAPIEvaluator():
                                    data_dir=data_dir,
                                    img_size=img_size,
                                    augmentation=augmentation,
-                                   json_file='instances_val2017.json',
-                                   name='val2017')
+                                   json_file=json_file,
+                                   name='val')
         self.dataloader = torch.utils.data.DataLoader(
             self.dataset, batch_size=1, shuffle=False, num_workers=0)
         self.img_size = img_size
