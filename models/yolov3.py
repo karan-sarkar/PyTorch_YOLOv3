@@ -128,6 +128,7 @@ class YOLOv3(nn.Module):
             self.module_list = create_yolov3_modules(config_model, ignore_thre)
         else:
             raise Exception('Model name {} is not available'.format(config_model['TYPE']))
+        self.loss_dict = defaultdict(float)
 
     def forward(self, x, targets=None):
         """
@@ -145,7 +146,6 @@ class YOLOv3(nn.Module):
         """
         train = targets is not None
         output = []
-        self.loss_dict = defaultdict(float)
         route_layers = []
         for i, module in enumerate(self.module_list):
             # yolo layers
