@@ -73,8 +73,9 @@ class COCODataset(Dataset):
             id_ (int): same as the input index. Used for evaluation.
         """
         id_ = self.ids[index]
-
-        anno_ids = self.coco.getAnnIds(imgIds=[int(id_['id'])], iscrowd=None)
+        file = self.coco.loadImgs(id_)[0]["file_name"]
+        
+        anno_ids = self.coco.getAnnIds(imgIds=[int(id_)], iscrowd=None)
         annotations = self.coco.loadAnns(anno_ids)
 
         lrflip = False
@@ -83,7 +84,7 @@ class COCODataset(Dataset):
 
         # load image and preprocess
         img_file = os.path.join(self.data_dir, self.name,
-                                id_['file_name'])
+                                file)
         img = cv2.imread(img_file)
 
         img, info_img = preprocess(img, self.img_size, jitter=self.jitter,
