@@ -173,6 +173,8 @@ def main():
             imgs = Variable(imgs.type(dtype))
             targets = Variable(targets.type(dtype), requires_grad=False)
             loss = model(imgs, targets)
+            print(loss)
+            print(loss.shape)
             loss.backward()
 
         optimizer.step()
