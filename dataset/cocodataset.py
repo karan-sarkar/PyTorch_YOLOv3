@@ -30,7 +30,7 @@ class COCODataset(Dataset):
         self.data_dir = data_dir
         self.json_file = json_file
         self.model_type = model_type
-        self.coco = COCO(str(daytime) + '_bdd100k_labels_images_det_coco_' + str(name) + '.json')
+        self.coco = COCO(str(json_file) + '_bdd100k_labels_images_det_coco_' + str(name) + '.json')
         self.ids = self.coco.getImgIds()
         if debug:
             self.ids = self.ids[1:2]
