@@ -153,7 +153,7 @@ class YOLOv3(nn.Module):
                 if train:
                     x, *loss_dict = module(x, targets)
                     for name, loss in zip(['xy', 'wh', 'conf', 'cls', 'l2'] , loss_dict):
-                        self.loss_dict[name] += loss.to(self.loss_dict[name].device)
+                        self.loss_dict[name] += loss
                 else:
                     x = module(x)
                 output.append(x)
