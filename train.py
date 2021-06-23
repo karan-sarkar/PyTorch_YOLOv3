@@ -14,6 +14,7 @@ import random
 import torch
 from torch.autograd import Variable
 import torch.optim as optim
+import tqdm
 
 
 def parse_args():
@@ -152,7 +153,7 @@ def main():
     scheduler = optim.lr_scheduler.LambdaLR(optimizer, burnin_schedule)
 
     # start training loop
-    for iter_i in range(iter_state, iter_size + 1):
+    for iter_i in tqdm.tqdm(range(iter_state, iter_size + 1)):
 
         # COCO evaluation
         if iter_i % args.eval_interval == 0 and iter_i > 0:
